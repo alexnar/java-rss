@@ -3,6 +3,7 @@ package ru.alexnar.rss.controller;
 import ru.alexnar.rss.controller.commands.Command;
 import ru.alexnar.rss.controller.commands.DefaultCommand;
 import ru.alexnar.rss.controller.commands.HelloCommand;
+import ru.alexnar.rss.controller.console.CommandLine;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,9 +22,17 @@ public class Menu {
     this.commands = commands;
   }
 
-  public void executeCommand(String commandName) {
-    Command command = commands.get(commandName);
-    command.execute();
+  /*public void start() {
+    CommandLineReader commandLineReader = new CommandLineReader();
+    while (true) {
+      String commandLineStr = commandLineReader.readLine();
+      CommandLine commandLine = new CommandLine(commandLineStr);
+    }
+  }*/
+
+  public void executeCommand(CommandLine commandLine) {
+    Command command = commands.get(commandLine.alias);
+    command.execute(commandLine.args);
   }
 
   private Map<String, Command> defaultCommandMap() {
@@ -36,14 +45,5 @@ public class Menu {
             new HelloCommand(),
             new DefaultCommand()
     );
-  }
-
-  public static void main(String[] args) {
-    Map<String, Command> commands = new HashMap<>();
-    commands.put("create", new HelloCommand());
-    commands.put("create1", new HelloCommand());
-    commands.put("create2", new HelloCommand());
-    Menu menu = new Menu(commands);
-    menu.executeCommand("create3");
   }
 }

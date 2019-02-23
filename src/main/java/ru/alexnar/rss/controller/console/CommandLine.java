@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class CommandLine {
   public final String alias;
-  private final List<String> args;
+  public final List<String> args;
 
   public CommandLine(String commandLine) throws CommandLineParseException {
     List<String>  commandLineParts = commandLineParts(commandLine);

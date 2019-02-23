@@ -1,8 +1,10 @@
 package ru.alexnar.rss.controller.commands;
 
+import java.util.List;
+
 public class HelloCommand implements Command {
   @Override
-  public void execute() {
+  public void execute(List<String> args) {
     sayHello();
   }
 
