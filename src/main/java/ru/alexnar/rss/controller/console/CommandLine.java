@@ -36,6 +36,7 @@ public class CommandLine {
 
   private List<String> commandLineParts(String commandLine) throws CommandLineParseException {
     if (commandLine == null || commandLine.isEmpty()) throw new CommandLineParseException("incorrect command");
+    if (!commandLine.matches("[0-9a-zA-Z ]+")) throw new CommandLineParseException("wrong symbols");
     String[] parts = commandLine.split("\\W+");
     return Arrays.stream(parts)
             .filter(part -> !part.isEmpty())
