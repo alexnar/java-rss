@@ -1,4 +1,4 @@
-package ru.alexnar.rss.controller.commands;
+package ru.alexnar.rss.domain.commands;
 
 import java.util.List;
 

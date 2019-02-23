@@ -1,8 +1,8 @@
 package ru.alexnar.rss.controller;
 
-import ru.alexnar.rss.controller.commands.Command;
-import ru.alexnar.rss.controller.commands.DefaultCommand;
-import ru.alexnar.rss.controller.commands.HelloCommand;
+import ru.alexnar.rss.domain.commands.Command;
+import ru.alexnar.rss.domain.commands.DefaultCommand;
+import ru.alexnar.rss.domain.commands.HelloCommand;
 import ru.alexnar.rss.controller.console.CommandLine;
 
 import java.util.Arrays;
