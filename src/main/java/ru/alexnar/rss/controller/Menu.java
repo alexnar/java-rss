@@ -6,13 +6,12 @@ import ru.alexnar.rss.controller.commands.HelloCommand;
 import ru.alexnar.rss.controller.console.CommandLine;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Menu {
-  private Map<String, Command> commands;
+public abstract class Menu {
+  protected Map<String, Command> commands;
 
   public Menu() {
     this.commands = defaultCommandMap();
@@ -22,13 +21,7 @@ public class Menu {
     this.commands = commands;
   }
 
-  /*public void start() {
-    CommandLineReader commandLineReader = new CommandLineReader();
-    while (true) {
-      String commandLineStr = commandLineReader.readLine();
-      CommandLine commandLine = new CommandLine(commandLineStr);
-    }
-  }*/
+  public abstract void start();
 
   public void executeCommand(CommandLine commandLine) {
     Command command = commands.get(commandLine.alias);

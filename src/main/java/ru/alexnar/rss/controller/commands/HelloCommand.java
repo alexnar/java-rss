@@ -13,6 +13,11 @@ public class HelloCommand implements Command {
     return "hello";
   }
 
+  @Override
+  public String description() {
+    return null;
+  }
+
   public void sayHello() {
     System.out.println("hello world");
   }
