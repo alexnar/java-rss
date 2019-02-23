@@ -8,37 +8,37 @@ import static org.junit.Assert.*;
 
 public class CommandLineTest {
   @Test(expected = CommandLineParseException.class)
-  public void emptyCommandThrowsParseException() {
+  public void emptyCommandThrowsParseException() throws CommandLineParseException {
     CommandLine commandLine = new CommandLine("");
   }
 
   @Test(expected = CommandLineParseException.class)
-  public void nullCommandThrowsParseException() {
+  public void nullCommandThrowsParseException() throws CommandLineParseException {
     CommandLine commandLine = new CommandLine(null);
   }
 
   @Test
-  public void commandWithoutArgsAliasParsed() {
+  public void commandWithoutArgsAliasParsed() throws CommandLineParseException {
     CommandLine commandLine = new CommandLine("command1");
     assertEquals("command1", commandLine.alias);
     assertEquals(0, commandLine.argsLen());
   }
 
   @Test
-  public void commandWithArgsParsed() {
+  public void commandWithArgsParsed() throws CommandLineParseException {
     CommandLine commandLine = new CommandLine("command1 arg1 arg2");
     assertEquals("command1", commandLine.alias);
-    assertEquals(commandLine.arg(1), "arg1");
-    assertEquals(commandLine.arg(2), "arg2");
+    assertEquals("arg1", commandLine.arg(0));
+    assertEquals("arg2", commandLine.arg(1));
   }
 
   @Test
-  public void notTrimmedCommandParsed() {
+  public void notTrimmedCommandParsed() throws CommandLineParseException {
     CommandLine commandLine = new CommandLine("   command1  arg1      arg2   ");
     assertEquals("command1", commandLine.alias);
     assertEquals(2, commandLine.argsLen());
-    assertEquals(commandLine.arg(1), "arg1");
-    assertEquals(commandLine.arg(2), "arg2");
+    assertEquals("arg1", commandLine.arg(0));
+    assertEquals("arg2", commandLine.arg(1));
   }
 
 }
