@@ -51,7 +51,7 @@ public class ConsoleMenu extends Menu {
     return new Command() {
       @Override
       public void execute(List<String> args) {
-
+        System.exit(0);
       }
 
       @Override
@@ -64,6 +64,11 @@ public class ConsoleMenu extends Menu {
         return "stop application";
       }
     };
+  }
+
+  public static void main(String[] args) {
+    ConsoleMenu consoleMenu = new ConsoleMenu();
+    consoleMenu.start();
   }
 
 }
