@@ -10,14 +10,17 @@ import java.util.Map;
 
 public class ConsoleMenu extends Menu {
   private static final String QUIT_ALIAS = "quit";
+  private static final String HELP_ALIAS = "help";
 
   public ConsoleMenu() {
     super();
     commands.put(QUIT_ALIAS, quitCommand());
+    commands.put(HELP_ALIAS, helpCommand());
   }
 
   @Override
   public void start() {
+    printHelp();
     while (true) {
       CommandLineReader commandLineReader = new CommandLineReader();
       String commandLineStr = commandLineReader.readLine();
@@ -44,7 +47,7 @@ public class ConsoleMenu extends Menu {
   }
 
   private void printCommand(Command command) {
-    System.out.println(command + " - " + command.description());
+    System.out.println(command.alias() + " - " + command.description());
   }
 
   private Command quitCommand() {
@@ -62,6 +65,25 @@ public class ConsoleMenu extends Menu {
       @Override
       public String description() {
         return "stop application";
+      }
+    };
+  }
+
+  private Command helpCommand() {
+    return new Command() {
+      @Override
+      public void execute(List<String> args) {
+        printHelp();
+      }
+
+      @Override
+      public String alias() {
+        return "help";
+      }
+
+      @Override
+      public String description() {
+        return "print help";
       }
     };
   }
