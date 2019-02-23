@@ -1,6 +1,7 @@
 package ru.alexnar.rss.domain.feed;
 
 import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Feed {
+public class Feed implements Runnable {
   private final FeedProperties feedFetchProperties;
   private final URL url;
 
@@ -17,18 +18,29 @@ public class Feed {
     this.url = url(properties.url);
   }
 
-  public SyndFeed fetch() throws com.rometools.rome.io.FeedException {
+  @Override
+  public void run() {
+    SyndFeed feed = null;
+    try {
+      feed = fetch();
+      write(feed);
+    } catch (FeedException e) {
+      System.out.println("Feed error");
+    }
+  }
+
+  private SyndFeed fetch() throws FeedException {
     SyndFeedInput input = new SyndFeedInput();
     SyndFeed feed;
     try (XmlReader xmlReader = new XmlReader(url)) {
       feed = input.build(xmlReader);
     } catch (IOException e) {
-      throw new com.rometools.rome.io.FeedException("Error creating xml reader", e);
+      throw new FeedException("Error creating xml reader", e);
     }
     return feed;
   }
 
-  public void write() {
+  private void write(SyndFeed feed) {
     // write to file
   }
 
