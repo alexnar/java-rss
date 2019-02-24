@@ -2,6 +2,7 @@ package ru.alexnar.rss.domain.feed;
 
 import com.rometools.rome.io.FeedException;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,11 +21,13 @@ public class FeedManager {
   }
 
   public FeedManager(int threadPoolSize) {
+    feedSchedules = new HashMap<>();
     scheduledExecutorService = Executors.newScheduledThreadPool(threadPoolSize);
   }
 
-  private void add(FeedProperties prop) throws FeedException {
-    Feed feed = new Feed(prop);
+  public void add(FeedProperties prop) {
+    Feed feed = createFeed(prop);
+    if (feed == null) return;
     long duration = prop.period.duration;
     TimeUnit unit = prop.period.unit;
     ScheduledFuture<?> scheduledFuture = scheduledExecutorService
@@ -37,7 +40,31 @@ public class FeedManager {
 
   }
 
+  public Map<String, FeedSchedule> getFeedSchedules() {
+    return feedSchedules;
+  }
+
   private void remove(String url) {
 
+  }
+
+  private Feed createFeed(FeedProperties properties) {
+    Feed feed;
+    try {
+      feed = new Feed(properties);
+    } catch (FeedException e) {
+      System.out.println("feed creation error: " + e.getMessage());
+      return null;
+    }
+    return feed;
+  }
+
+  public static void main(String[] args) {
+    FeedManager feedManager = new FeedManager();
+    FeedProperties props = new FeedProperties("https://habr.com/ru/rss/post/335382/", 5,
+            new Period(10, TimeUnit.SECONDS));
+    feedManager.add(props);
+    feedManager.add(new FeedProperties("https://habr.com/ru/rss/post/335383/", 5, new Period(10, TimeUnit.SECONDS)));
+    System.out.println();
   }
 }
