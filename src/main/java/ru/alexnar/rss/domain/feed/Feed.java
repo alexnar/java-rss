@@ -10,11 +10,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Feed implements Runnable {
-  private final FeedProperties feedFetchProperties;
+  private final FeedProperties properties;
   private final URL url;
 
   public Feed(FeedProperties properties) throws FeedException {
-    this.feedFetchProperties = properties;
+    this.properties = properties;
     this.url = url(properties.url);
   }
 
