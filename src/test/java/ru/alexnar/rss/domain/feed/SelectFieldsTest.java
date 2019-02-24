@@ -24,6 +24,16 @@ public class SelectFieldsTest {
   @Test
   public void emptyListReturnEmptyLists() {
     SelectFields selectFields = new SelectFields(new ArrayList<>());
+    emptyAssertion(selectFields);
+  }
+
+  @Test
+  public void nullReturnEmptyLists() {
+    SelectFields selectFields = new SelectFields(null);
+    emptyAssertion(selectFields);
+  }
+
+  private void emptyAssertion(SelectFields selectFields) {
     List<String> generalFields = selectFields.generalFields;
     List<String> elementFields = selectFields.elementFields;
     assertNotNull(generalFields);

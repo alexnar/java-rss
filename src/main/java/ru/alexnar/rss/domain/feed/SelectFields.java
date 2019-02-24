@@ -1,5 +1,6 @@
 package ru.alexnar.rss.domain.feed;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,11 @@ public class SelectFields {
   public final List<String> elementFields;
 
   public SelectFields(List<String> args) {
+    if (args == null) {
+      this.generalFields = new ArrayList<>();
+      this.elementFields = new ArrayList<>();
+      return;
+    }
     this.generalFields = args.stream()
             .filter(arg -> !arg.startsWith(FIELD_ELEMENT_IDENTIFIER))
             .collect(Collectors.toList());

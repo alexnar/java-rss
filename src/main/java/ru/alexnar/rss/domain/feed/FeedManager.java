@@ -62,9 +62,9 @@ public class FeedManager {
   public static void main(String[] args) {
     FeedManager feedManager = new FeedManager();
     FeedProperties props = new FeedProperties("https://habr.com/ru/rss/post/335382/", 5,
-            new Period(10, TimeUnit.SECONDS));
+            new Period(10, TimeUnit.SECONDS), null);
     feedManager.add(props);
-    feedManager.add(new FeedProperties("https://habr.com/ru/rss/post/335383/", 5, new Period(10, TimeUnit.SECONDS)));
+    feedManager.add(new FeedProperties("https://habr.com/ru/rss/post/335383/", 5, new Period(10, TimeUnit.SECONDS), null));
     System.out.println();
   }
 }

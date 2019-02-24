@@ -13,7 +13,7 @@ public class Application {
   private void run() {
     FeedManager feedManager = new FeedManager();
     Period period = new Period(10,TimeUnit.SECONDS);
-    FeedProperties feedProperties = new FeedProperties("https://habr.com/ru/rss/post/335382/", 10, period);
+    FeedProperties feedProperties = new FeedProperties("https://habr.com/ru/rss/post/335382/", 10, period, null);
     feedManager.add(feedProperties);
   }
 
