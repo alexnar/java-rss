@@ -20,7 +20,7 @@ public class Feed implements Runnable {
 
   @Override
   public void run() {
-    SyndFeed feed = null;
+    SyndFeed feed;
     try {
       feed = fetch();
       write(feed);

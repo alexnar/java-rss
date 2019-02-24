@@ -2,9 +2,9 @@ package ru.alexnar.rss.domain.feed;
 
 public class FeedProperties {
   public final String url;
-  public int elementCount;
-  public Period period;
-  public String outputFileName;
+  public final int elementCount;
+  public final Period period;
+  public final String outputFileName;
 
   public FeedProperties(String url, int elementCount, Period period) {
     this.url = url;
