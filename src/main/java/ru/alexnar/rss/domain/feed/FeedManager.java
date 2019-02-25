@@ -1,7 +1,9 @@
 package ru.alexnar.rss.domain.feed;
 
 import com.rometools.rome.io.FeedException;
+import ru.alexnar.rss.domain.feed.select.SelectFields;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -53,7 +55,7 @@ public class FeedManager {
     try {
       feed = new Feed(properties);
     } catch (FeedException e) {
-      System.out.println("feed creation error: " + e.getMessage());
+      System.out.println("sourceFeed creation error: " + e.getMessage());
       return null;
     }
     return feed;
@@ -61,8 +63,10 @@ public class FeedManager {
 
   public static void main(String[] args) {
     FeedManager feedManager = new FeedManager();
+    SelectFields selectFields = new SelectFields(Arrays.asList("author", "language",
+            "element_title", "element_link", "element_description"));
     FeedProperties props = new FeedProperties("https://habr.com/ru/rss/post/335382/", 5,
-            new Period(10, TimeUnit.SECONDS), null);
+            new Period(10, TimeUnit.SECONDS), selectFields);
     feedManager.add(props);
     feedManager.add(new FeedProperties("https://habr.com/ru/rss/post/335383/", 5, new Period(10, TimeUnit.SECONDS), null));
     System.out.println();

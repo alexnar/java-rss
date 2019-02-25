@@ -1,5 +1,7 @@
 package ru.alexnar.rss.domain.feed;
 
+import ru.alexnar.rss.domain.feed.select.SelectFields;
+
 public class FeedProperties {
   public final String url;
   public final int elementCount;

@@ -1,6 +1,7 @@
 package ru.alexnar.rss.domain.feed;
 
 import org.junit.Test;
+import ru.alexnar.rss.domain.feed.select.SelectFields;
 
 import java.util.ArrayList;
 import java.util.Arrays;

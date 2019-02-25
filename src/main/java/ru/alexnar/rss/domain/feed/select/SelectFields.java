@@ -1,4 +1,4 @@
-package ru.alexnar.rss.domain.feed;
+package ru.alexnar.rss.domain.feed.select;
 
 import java.util.ArrayList;
 import java.util.List;
