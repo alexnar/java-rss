@@ -22,7 +22,8 @@ public class FeedEntriesSelector implements FeedFieldSelector {
   @Override
   public void selectField(SyndFeed sourceFeed, SyndFeed resultFeed) {
     List<SyndEntry> sourceEntries = sourceFeed.getEntries();
-    List<SyndEntry> limitedEntries = sourceEntries.subList(0, props.elementCount);
+    int selectElementCount = selectElementsCount(sourceFeed, props);
+    List<SyndEntry> limitedEntries = sourceEntries.subList(0, selectElementCount);
     Map<String, FeedEntryFieldSelector> elementFieldSelectors = elementFieldSelectorMap();
     List<String> elementFields = props.selectFields.elementFields;
     if (elementFields.isEmpty()) return;
@@ -33,6 +34,12 @@ public class FeedEntriesSelector implements FeedFieldSelector {
             .map(entry -> copyEntry(entry, entrySelectors))
             .collect(Collectors.toList());
     resultFeed.setEntries(selectedEntries);
+  }
+
+  private int selectElementsCount(SyndFeed sourceFeed, FeedProperties props) {
+    List<SyndEntry> entries = sourceFeed.getEntries();
+    int selectElementCount = Math.min(props.elementCount, entries.size());
+    return selectElementCount > 0 ? selectElementCount : 0;
   }
 
   private SyndEntry copyEntry(SyndEntry sourceEntry, List<FeedEntryFieldSelector> feedEntryFieldSelectors) {
