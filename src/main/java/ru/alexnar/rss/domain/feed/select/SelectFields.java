@@ -20,7 +20,6 @@ public class SelectFields {
             .collect(Collectors.toList());
     this.elementFields = args.stream()
             .filter(arg -> arg.startsWith(FIELD_ELEMENT_IDENTIFIER))
-            .map(arg -> arg.substring(FIELD_ELEMENT_IDENTIFIER.length()))
             .collect(Collectors.toList());
 
   }

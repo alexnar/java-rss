@@ -6,10 +6,12 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.SyndFeedOutput;
 import com.rometools.rome.io.XmlReader;
+import org.xml.sax.InputSource;
 import ru.alexnar.rss.domain.feed.select.FeedSelect;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -31,9 +33,11 @@ public class Feed implements Runnable {
 
   private SyndFeed fetch() {
     SyndFeedInput input = new SyndFeedInput();
+
     SyndFeed feed = null;
-    try (XmlReader xmlReader = new XmlReader(url)) {
-      feed = input.build(xmlReader);
+    try (InputStream inputStream = url.openStream()) {
+      InputSource inputSource = new InputSource(inputStream);
+      feed = input.build(inputSource);
     } catch (IOException e) {
       System.out.println("Creating xml reader error");
     } catch (FeedException e) {
@@ -49,20 +53,14 @@ public class Feed implements Runnable {
 
   private void write(SyndFeed feed) {
     SyndFeedOutput feedOutput = new SyndFeedOutput();
-    SyndFeed syndFeed = new SyndFeedImpl();
-    syndFeed.setFeedType(feed.getFeedType());
-    syndFeed.setTitle(feed.getTitle());
-    syndFeed.setLink(feed.getLink());
-    syndFeed.setDescription(feed.getDescription());
-//    syndFeed.setAuthor(sourceFeed.getAuthor());
-//    syndFeed.setCategories(sourceFeed.getCategories());
-//    syndFeed.setEntries(sourceFeed.getEntries());
     try {
-      feedOutput.output(syndFeed, new File("test.xml"));
+      String fileName = properties.outputFileName;
+      File outputFile = new File(fileName);
+      feedOutput.output(feed, outputFile);
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("Error creating file");
     } catch (FeedException e) {
-      e.printStackTrace();
+      System.out.println("Incorrect feed!");
     }
   }
 

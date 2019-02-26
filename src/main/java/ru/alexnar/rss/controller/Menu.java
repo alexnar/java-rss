@@ -1,5 +1,6 @@
 package ru.alexnar.rss.controller;
 
+import ru.alexnar.rss.domain.commands.AddFeedCommand;
 import ru.alexnar.rss.domain.commands.Command;
 import ru.alexnar.rss.domain.commands.DefaultCommand;
 import ru.alexnar.rss.domain.commands.HelloCommand;
@@ -36,7 +37,8 @@ public abstract class Menu {
   private List<Command> defaultCommandList() {
     return Arrays.asList(
             new HelloCommand(),
-            new DefaultCommand()
+            new DefaultCommand(),
+            new AddFeedCommand()
     );
   }
 }

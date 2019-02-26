@@ -33,10 +33,19 @@ public class ConsoleMenu extends Menu {
     try {
       commandLine = new CommandLine(commandLineStr);
     } catch (CommandLineParseException e) {
-      System.out.println("Wrong command");
-      printHelp();
+      printWrongCommand();
+      return;
+    }
+    if (commands.get(commandLine.alias) == null) {
+      printWrongCommand();
+      return;
     }
     executeCommand(commandLine);
+  }
+
+  private void printWrongCommand() {
+    System.out.println("Wrong command!!!");
+    printHelp();
   }
 
   private void printHelp() {

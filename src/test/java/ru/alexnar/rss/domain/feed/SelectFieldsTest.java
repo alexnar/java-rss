@@ -19,7 +19,7 @@ public class SelectFieldsTest {
     assertEquals(2, generalFields.size());
     assertEquals(3, elementFields.size());
     assertTrue(generalFields.containsAll(Arrays.asList("author", "language")));
-    assertTrue(elementFields.containsAll(Arrays.asList("title", "link", "description")));
+    assertTrue(elementFields.containsAll(Arrays.asList("element_title", "element_link", "element_description")));
   }
 
   @Test

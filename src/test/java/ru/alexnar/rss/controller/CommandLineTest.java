@@ -40,10 +40,4 @@ public class CommandLineTest {
     assertEquals("arg1", commandLine.arg(0));
     assertEquals("arg2", commandLine.arg(1));
   }
-
-  @Test(expected = CommandLineParseException.class)
-  public void randomStringThrowParseException() throws CommandLineParseException {
-    CommandLine commandLine = new CommandLine(",, [][// ,,agaj dgn.  asdg.asd,asdg");
-  }
-
 }

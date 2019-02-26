@@ -15,14 +15,16 @@ public class FeedManager {
   private static final int THREAD_POOL_SIZE = 4;
   private static final int SCHEDULE_INITIAL_DELAY = 0;
 
+  private static FeedManager instance = new FeedManager();
+
   private Map<String, FeedSchedule> feedSchedules;
   private ScheduledExecutorService scheduledExecutorService;
 
-  public FeedManager() {
+  private FeedManager() {
     this(THREAD_POOL_SIZE);
   }
 
-  public FeedManager(int threadPoolSize) {
+  private FeedManager(int threadPoolSize) {
     feedSchedules = new HashMap<>();
     scheduledExecutorService = Executors.newScheduledThreadPool(threadPoolSize);
   }
@@ -44,6 +46,10 @@ public class FeedManager {
 
   public Map<String, FeedSchedule> getFeedSchedules() {
     return feedSchedules;
+  }
+
+  public static FeedManager getInstance() {
+    return instance;
   }
 
   private void remove(String url) {

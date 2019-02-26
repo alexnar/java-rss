@@ -24,6 +24,7 @@ public class CommandLine {
   }
 
   private String parseAlias(List<String> commandLineParts) throws CommandLineParseException {
+    if (commandLineParts.isEmpty()) throw new CommandLineParseException("incorrect command");
     String commandLinePart = commandLineParts.get(0);
     String alias = commandLinePart.trim();
     if (alias.isEmpty()) throw new CommandLineParseException("incorrect command");
@@ -36,8 +37,7 @@ public class CommandLine {
 
   private List<String> commandLineParts(String commandLine) throws CommandLineParseException {
     if (commandLine == null || commandLine.isEmpty()) throw new CommandLineParseException("incorrect command");
-    if (!commandLine.matches("[0-9a-zA-Z ]+")) throw new CommandLineParseException("wrong symbols");
-    String[] parts = commandLine.split("\\W+");
+    String[] parts = commandLine.split(" ");
     return Arrays.stream(parts)
             .filter(part -> !part.isEmpty())
             .map(String::trim)
