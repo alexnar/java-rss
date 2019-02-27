@@ -25,7 +25,7 @@ public class FeedSelect {
     SyndFeed feedData = feed.currentFeedData;
     List<SyndEntry> entries = feedData.getEntries();
     List<SyndEntry> actualEntries = entries.stream()
-            //.filter(entry -> entry.getPublishedDate().after(feed.lastFetched))
+            .filter(entry -> entry.getPublishedDate().after(feed.lastFetched))
             .collect(Collectors.toList());
     int actualElementCount = selectElementsCount(feedData, props);
     actualEntries = actualEntries.subList(0, actualElementCount);
