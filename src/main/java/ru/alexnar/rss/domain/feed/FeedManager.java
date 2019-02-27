@@ -35,11 +35,12 @@ public class FeedManager {
 
   public void add(FeedProperties prop) {
     Feed feed = createFeed(prop);
+    FeedProcessor feedProcessor = new FeedProcessor(feed);
     if (feed == null) return;
     long duration = prop.period.duration;
     TimeUnit unit = prop.period.unit;
     ScheduledFuture<?> scheduledFuture = scheduledExecutorService
-            .scheduleAtFixedRate(feed, SCHEDULE_INITIAL_DELAY, duration, unit);
+            .scheduleAtFixedRate(feedProcessor, SCHEDULE_INITIAL_DELAY, duration, unit);
     FeedSchedule feedSchedule = new FeedSchedule(feed, scheduledFuture);
     feedSchedules.put(prop.url, feedSchedule);
   }
