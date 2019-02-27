@@ -95,10 +95,4 @@ public class ConsoleMenu extends Menu {
       }
     };
   }
-
-  public static void main(String[] args) {
-    ConsoleMenu consoleMenu = new ConsoleMenu();
-    consoleMenu.start();
-  }
-
 }

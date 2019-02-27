@@ -70,15 +70,4 @@ public class FeedManager {
     }
     return feed;
   }
-
-  public static void main(String[] args) {
-    FeedManager feedManager = new FeedManager();
-    SelectFields selectFields = new SelectFields(Arrays.asList("author", "language",
-            "element_title", "element_link", "element_description"));
-    FeedProperties props = new FeedProperties("https://habr.com/ru/rss/post/335382/", 5,
-            new Period(10, TimeUnit.SECONDS), selectFields);
-    feedManager.add(props);
-    feedManager.add(new FeedProperties("https://habr.com/ru/rss/post/335383/", 5, new Period(10, TimeUnit.SECONDS), null));
-    System.out.println();
-  }
 }
