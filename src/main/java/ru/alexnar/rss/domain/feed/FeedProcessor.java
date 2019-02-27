@@ -47,15 +47,7 @@ public class FeedProcessor implements Runnable {
   }
 
   private void write(SyndFeed syndFeed) {
-    SyndFeedOutput feedOutput = new SyndFeedOutput();
-    try {
-      String fileName = feed.properties.outputFileName;
-      File outputFile = new File(fileName);
-      feedOutput.output(syndFeed, outputFile);
-    } catch (IOException e) {
-      System.out.println("Error creating file");
-    } catch (FeedException e) {
-      System.out.println("Incorrect feed!");
-    }
+    FeedWriter feedWriter = new FeedWriter();
+    feedWriter.write(feed, syndFeed);
   }
 }
