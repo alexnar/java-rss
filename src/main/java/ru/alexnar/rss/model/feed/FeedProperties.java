@@ -33,6 +33,7 @@ public class FeedProperties {
   }
 
   private String fileNameFromUrl(String url) {
+    if (url == null) return null;
     return url.replaceAll("/", "_");
   }
 
