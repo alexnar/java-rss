@@ -9,13 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 public class ConsoleMenu extends Menu {
-  private static final String QUIT_ALIAS = "quit";
-  private static final String HELP_ALIAS = "help";
-
   public ConsoleMenu() {
     super();
-    commands.put(QUIT_ALIAS, quitCommand());
-    commands.put(HELP_ALIAS, helpCommand());
+    Command quitCommand = quitCommand();
+    Command helpCommand = helpCommand();
+    commands.put(quitCommand.alias(), quitCommand);
+    commands.put(helpCommand.alias(), helpCommand);
   }
 
   @Override
@@ -68,7 +67,7 @@ public class ConsoleMenu extends Menu {
 
       @Override
       public String alias() {
-        return "exit";
+        return "quit";
       }
 
       @Override
