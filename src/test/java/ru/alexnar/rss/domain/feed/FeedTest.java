@@ -2,6 +2,9 @@ package ru.alexnar.rss.domain.feed;
 
 import com.rometools.rome.io.FeedException;
 import org.junit.Test;
+import ru.alexnar.rss.model.feed.Feed;
+import ru.alexnar.rss.model.feed.FeedProperties;
+import ru.alexnar.rss.model.feed.Period;
 
 import java.util.concurrent.TimeUnit;
 

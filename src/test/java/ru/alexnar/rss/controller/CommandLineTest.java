@@ -1,8 +1,8 @@
 package ru.alexnar.rss.controller;
 
 import org.junit.Test;
-import ru.alexnar.rss.controller.console.CommandLine;
-import ru.alexnar.rss.controller.console.CommandLineParseException;
+import ru.alexnar.rss.model.console.CommandLine;
+import ru.alexnar.rss.model.console.CommandLineParseException;
 
 import static org.junit.Assert.*;
 

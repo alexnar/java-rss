@@ -1,7 +1,11 @@
 package ru.alexnar.rss.domain.feed;
 
 import com.rometools.rome.io.FeedException;
-import ru.alexnar.rss.domain.feed.select.SelectFields;
+import ru.alexnar.rss.model.feed.select.SelectFields;
+import ru.alexnar.rss.model.feed.Feed;
+import ru.alexnar.rss.model.feed.FeedProperties;
+import ru.alexnar.rss.model.feed.FeedSchedule;
+import ru.alexnar.rss.model.feed.Period;
 
 import java.util.Arrays;
 import java.util.HashMap;

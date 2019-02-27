@@ -1,7 +1,7 @@
 package ru.alexnar.rss.domain.commands;
 
 import ru.alexnar.rss.domain.feed.FeedManager;
-import ru.alexnar.rss.domain.feed.FeedProperties;
+import ru.alexnar.rss.model.feed.FeedProperties;
 
 import java.util.List;
 

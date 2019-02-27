@@ -2,7 +2,8 @@ package ru.alexnar.rss.domain.feed.select;
 
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndFeedImpl;
-import ru.alexnar.rss.domain.feed.FeedProperties;
+import ru.alexnar.rss.model.feed.FeedProperties;
+import ru.alexnar.rss.model.feed.select.SelectFields;
 
 import java.util.Map;
 

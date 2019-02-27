@@ -1,8 +1,8 @@
 package ru.alexnar.rss.controller;
 
 import ru.alexnar.rss.domain.commands.Command;
-import ru.alexnar.rss.controller.console.CommandLine;
-import ru.alexnar.rss.controller.console.CommandLineParseException;
+import ru.alexnar.rss.model.console.CommandLine;
+import ru.alexnar.rss.model.console.CommandLineParseException;
 import ru.alexnar.rss.controller.console.CommandLineReader;
 
 import java.util.List;

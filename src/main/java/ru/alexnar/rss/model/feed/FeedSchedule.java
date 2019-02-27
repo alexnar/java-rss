@@ -1,4 +1,6 @@
-package ru.alexnar.rss.domain.feed;
+package ru.alexnar.rss.model.feed;
+
+import ru.alexnar.rss.model.feed.Feed;
 
 import java.util.concurrent.ScheduledFuture;
 

@@ -3,7 +3,7 @@ package ru.alexnar.rss.domain.feed.select;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndEntryImpl;
 import com.rometools.rome.feed.synd.SyndFeed;
-import ru.alexnar.rss.domain.feed.FeedProperties;
+import ru.alexnar.rss.model.feed.FeedProperties;
 
 import java.util.List;
 import java.util.Map;

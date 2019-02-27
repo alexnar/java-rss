@@ -2,9 +2,9 @@ package ru.alexnar.rss.domain.feed.select;
 
 import com.rometools.rome.feed.synd.*;
 import org.junit.Test;
-import ru.alexnar.rss.domain.feed.Feed;
-import ru.alexnar.rss.domain.feed.FeedProperties;
-import ru.alexnar.rss.domain.feed.Period;
+import ru.alexnar.rss.model.feed.FeedProperties;
+import ru.alexnar.rss.model.feed.Period;
+import ru.alexnar.rss.model.feed.select.SelectFields;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

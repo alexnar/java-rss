@@ -1,11 +1,11 @@
 package ru.alexnar.rss.domain.feed.select;
 
-import ru.alexnar.rss.domain.feed.FeedProperties;
+import ru.alexnar.rss.model.feed.FeedProperties;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static ru.alexnar.rss.domain.feed.select.FeedFields.*;
+import static ru.alexnar.rss.model.feed.select.FeedFields.*;
 
 public class Selectors {
   public static Map<String, FeedFieldSelector> paramSelectorMap(FeedProperties props) {

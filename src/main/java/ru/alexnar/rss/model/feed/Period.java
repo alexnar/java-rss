@@ -1,4 +1,4 @@
-package ru.alexnar.rss.domain.feed;
+package ru.alexnar.rss.model.feed;
 
 import java.util.concurrent.TimeUnit;
 
