@@ -1,43 +1,50 @@
 package ru.alexnar.rss.domain.feed.select;
 
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndEntryImpl;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndFeedImpl;
+import ru.alexnar.rss.model.feed.Feed;
+import ru.alexnar.rss.model.feed.FeedEntry;
 import ru.alexnar.rss.model.feed.FeedProperties;
-import ru.alexnar.rss.model.feed.select.SelectFields;
 
+import java.util.List;
 import java.util.Map;
-
-import static ru.alexnar.rss.domain.feed.select.Selectors.paramSelectorMap;
+import java.util.stream.Collectors;
 
 public class FeedSelect {
-  private final SyndFeed sourceFeed;
-  private final FeedProperties props;
+  private final Feed feed;
 
-  public FeedSelect(SyndFeed sourceFeed, FeedProperties props) {
-    this.sourceFeed = sourceFeed;
-    this.props = props;
+
+  public FeedSelect(Feed feed) {
+    this.feed = feed;
   }
 
-  public SyndFeed select() {
-    SyndFeed resultFeed = initialResultFeed();
-    SelectFields selectFields = props.selectFields;
-    Map<String, FeedFieldSelector> paramSelectors = paramSelectorMap(props);
-    for (String generalField : selectFields.generalFields) {
-      FeedFieldSelector feedFieldSelector = paramSelectors.get(generalField);
-      feedFieldSelector.selectField(sourceFeed, resultFeed);
-    }
-    if (selectFields.elementFields.isEmpty()) return resultFeed;
-    FeedFieldSelector elementSelector = paramSelectors.get("element");
-    elementSelector.selectField(sourceFeed, resultFeed);
-    return resultFeed;
+  public List<FeedEntry> select() {
+    FeedProperties props = feed.properties;
+    SyndFeed feedData = feed.currentFeedData;
+    List<SyndEntry> entries = feedData.getEntries();
+    List<SyndEntry> actualEntries = entries.stream()
+            //.filter(entry -> entry.getPublishedDate().after(feed.lastFetched))
+            .collect(Collectors.toList());
+    int actualElementCount = selectElementsCount(feedData, props);
+    actualEntries = actualEntries.subList(0, actualElementCount);
+    return selectFields(actualEntries);
   }
 
-  private SyndFeed initialResultFeed() {
-    SyndFeedImpl feedSelect = new SyndFeedImpl();
-    feedSelect.setFeedType(sourceFeed.getFeedType());
-    feedSelect.setTitle(sourceFeed.getTitle());
-    feedSelect.setLink(sourceFeed.getLink());
-    feedSelect.setDescription(sourceFeed.getDescription());
-    return feedSelect;
+  private int selectElementsCount(SyndFeed sourceFeed, FeedProperties props) {
+    List<SyndEntry> entries = sourceFeed.getEntries();
+    int selectElementCount = Math.min(props.elementCount, entries.size());
+    return selectElementCount > 0 ? selectElementCount : 0;
   }
+
+  private List<FeedEntry> selectFields(List<SyndEntry> actualEntries) {
+    Map<String, FeedEntryFieldSelector> selectorMap = Selectors.elementFieldSelectorMap();
+    Map<String, FeedEntryFieldSelector> actualSelectorMap = feed.properties.elementFields.stream()
+            .collect(Collectors.toMap(field -> field, selectorMap::get));
+    return actualEntries.stream()
+            .map(entry -> new FeedEntry(entry, actualSelectorMap))
+            .collect(Collectors.toList());
+  }
+
 }

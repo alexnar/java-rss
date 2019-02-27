@@ -4,6 +4,7 @@ import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedOutput;
 import ru.alexnar.rss.model.feed.Feed;
+import ru.alexnar.rss.model.feed.FeedEntry;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,27 +12,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FeedWriter {
   private static final String OUTPUT_DIR_PATH = "feed_output/";
 
-  public void write(Feed feed, SyndFeed syndFeed) {
+  public void write(Feed feed, List<FeedEntry> feedEntries) {
     if (!outputDirExists()) createOutputDir();
     String outputFileName = OUTPUT_DIR_PATH + feed.properties.outputFileName;
     File file = outputFile(outputFileName);
-    String feedContent = feedToString(syndFeed);
+    String feedContent = feedEntriesToString(feedEntries);
     appendFeedContent(file, feedContent, feed);
   }
 
-  private String feedToString(SyndFeed syndFeed) {
-    SyndFeedOutput feedOutput = new SyndFeedOutput();
-    String result = "";
-    try {
-      result = feedOutput.outputString(syndFeed);
-    } catch (FeedException e) {
-      System.out.println("wrong feed");
-    }
-    return result;
+  private String feedEntriesToString(List<FeedEntry> feedEntries) {
+    return feedEntries.stream()
+            .map(FeedEntry::toString)
+            .collect(Collectors.joining("\n"));
   }
 
   private boolean outputDirExists() {

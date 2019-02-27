@@ -1,16 +1,17 @@
 package ru.alexnar.rss.domain.feed;
 
+import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.SyndFeedOutput;
 import org.xml.sax.InputSource;
 import ru.alexnar.rss.domain.feed.select.FeedSelect;
 import ru.alexnar.rss.model.feed.Feed;
+import ru.alexnar.rss.model.feed.FeedEntry;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class FeedProcessor implements Runnable {
   private Feed feed;
@@ -21,14 +22,13 @@ public class FeedProcessor implements Runnable {
 
   @Override
   public void run() {
-    SyndFeed feed = fetch();
-    SyndFeed selectFeed = select(feed);
-    write(selectFeed);
+    fetch();
+    List<FeedEntry> entries = select(feed);
+    write(entries);
   }
 
-  private SyndFeed fetch() {
+  private void fetch() {
     SyndFeedInput input = new SyndFeedInput();
-
     SyndFeed syndFeed = null;
     try (InputStream inputStream = feed.url.openStream()) {
       InputSource inputSource = new InputSource(inputStream);
@@ -38,16 +38,16 @@ public class FeedProcessor implements Runnable {
     } catch (FeedException e) {
       System.out.println("Fetching feed error");
     }
-    return syndFeed;
+    feed.currentFeedData = syndFeed;
   }
 
-  private SyndFeed select(SyndFeed syndFeed) {
-    FeedSelect feedSelect = new FeedSelect(syndFeed, feed.properties);
+  private List<FeedEntry> select(Feed feed) {
+    FeedSelect feedSelect = new FeedSelect(feed);
     return feedSelect.select();
   }
 
-  private void write(SyndFeed syndFeed) {
+  private void write(List<FeedEntry> entries) {
     FeedWriter feedWriter = new FeedWriter();
-    feedWriter.write(feed, syndFeed);
+    feedWriter.write(feed, entries);
   }
 }

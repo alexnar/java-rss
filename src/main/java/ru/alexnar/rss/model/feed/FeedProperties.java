@@ -1,8 +1,8 @@
 package ru.alexnar.rss.model.feed;
 
-import ru.alexnar.rss.model.feed.select.FeedFields;
-import ru.alexnar.rss.model.feed.select.SelectFields;
+import ru.alexnar.rss.model.feed.select.FeedElementFields;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class FeedProperties {
@@ -12,20 +12,20 @@ public class FeedProperties {
   public final String url;
   public int elementCount;
   public Period period;
-  public SelectFields selectFields;
   public String outputFileName;
+  public final List<String> elementFields;
 
 
   public FeedProperties(String url) {
     this(url, DEFAULT_ELEMENTS_COUNT, DEFAULT_PERIOD, allFields());
   }
 
-  public FeedProperties(String url, int elementCount, Period period, SelectFields selectFields) {
+  public FeedProperties(String url, int elementCount, Period period, List<String> elementFields) {
     this.url = url;
     this.elementCount = elementCount;
     this.period = period;
     this.outputFileName = fileNameFromUrl(url);
-    this.selectFields = selectFields;
+    this.elementFields = elementFields;
   }
 
   public void setOutputFileName(String outputFileName) {
@@ -37,7 +37,7 @@ public class FeedProperties {
     return url.replaceAll("/", "_");
   }
 
-  private static SelectFields allFields() {
-    return new SelectFields(FeedFields.fields());
+  private static List<String> allFields() {
+    return FeedElementFields.fields();
   }
 }

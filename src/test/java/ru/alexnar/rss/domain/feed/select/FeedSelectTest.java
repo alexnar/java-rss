@@ -1,10 +1,13 @@
 package ru.alexnar.rss.domain.feed.select;
 
 import com.rometools.rome.feed.synd.*;
+import com.rometools.rome.io.FeedException;
 import org.junit.Test;
+import ru.alexnar.rss.domain.feed.FeedTestException;
+import ru.alexnar.rss.model.feed.Feed;
+import ru.alexnar.rss.model.feed.FeedEntry;
 import ru.alexnar.rss.model.feed.FeedProperties;
 import ru.alexnar.rss.model.feed.Period;
-import ru.alexnar.rss.model.feed.select.SelectFields;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,32 +15,23 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
+import static ru.alexnar.rss.model.feed.select.FeedElementFields.*;
 
 public class FeedSelectTest {
   @Test
-  public void selectFieldWorksCorrectly() throws ParseException {
-    SyndFeed feed = filledFeed();
-    List<String> fields = Collections.singletonList("author");
-    FeedSelect feedSelect = feedSelect(feed, fields, 2);
-    SyndFeed result = feedSelect.select();
-    assertEquals("Стэнли Кубрик", result.getAuthor());
-    assertNull(result.getLanguage());
-  }
-
-  @Test
   public void selectElementFieldWorksCorrectly() throws ParseException {
     SyndFeed feed = filledFeed();
-    List<String> fields = Arrays.asList("author", "element_title", "element_pubDate");
+    List<String> fields = Arrays.asList(TITLE.field(), PUB_DATE.field());
     FeedSelect feedSelect = feedSelect(feed, fields, 2);
-    SyndFeed result = feedSelect.select();
+    List<FeedEntry> entries = feedSelect.select();
 
-    SyndEntry entry1 = result.getEntries().get(0);
-    SyndEntry entry2 = result.getEntries().get(1);
-    String title1 = entry1.getTitle();
-    String title2 = entry2.getTitle();
-    SyndContent description1 = entry1.getDescription();
-    SyndContent description2 = entry2.getDescription();
-    assertEquals(2, result.getEntries().size());
+    FeedEntry entry1 = entries.get(0);
+    FeedEntry entry2 = entries.get(1);
+    String title1 = entry1.get(TITLE.field());
+    String title2 = entry2.get(TITLE.field());
+    String description1 = entry1.get(DESCRIPTION.field());
+    String description2 = entry2.get(DESCRIPTION.field());
+    assertEquals(2, entries.size());
     assertEquals("ROME v1.0", title1);
     assertEquals("ROME v3.0", title2);
     assertNull(description1);
@@ -47,28 +41,33 @@ public class FeedSelectTest {
   @Test
   public void selectElementCountMoreThanExistsReturnAll() throws ParseException {
     SyndFeed feed = filledFeed();
-    List<String> fields = Arrays.asList("author", "element_title", "element_pubDate");
+    List<String> fields = Arrays.asList(TITLE.field(), PUB_DATE.field());
     FeedSelect feedSelect = feedSelect(feed, fields, 3);
-    SyndFeed result = feedSelect.select();
+    List<FeedEntry> entries = feedSelect.select();
 
-    assertEquals(2, result.getEntries().size());
+    assertEquals(2, entries.size());
   }
 
   @Test
   public void selectNegativeElementCountReturnEmpties() throws ParseException {
     SyndFeed feed = filledFeed();
-    List<String> fields = Arrays.asList("author", "element_title", "element_pubDate");
+    List<String> fields = Arrays.asList(TITLE.field(), PUB_DATE.field());
     FeedSelect feedSelect = feedSelect(feed, fields, -1);
-    SyndFeed result = feedSelect.select();
+    List<FeedEntry> entries = feedSelect.select();
 
-    assertEquals(0, result.getEntries().size());
+    assertEquals(0, entries.size());
   }
 
-  private FeedSelect feedSelect(SyndFeed feed, List<String> fields, int elementCount) {
+  private FeedSelect feedSelect(SyndFeed syndFeed, List<String> fields, int elementCount) {
     String url = "https://some_not_existing_url.test";
-    SelectFields selectFields = new SelectFields(fields);
-    FeedProperties props = new FeedProperties(url, elementCount, defaultPeriod(), selectFields);
-    return new FeedSelect(feed, props);
+    FeedProperties props = new FeedProperties(url, elementCount, defaultPeriod(), fields);
+    Feed feed;
+    try {
+      feed = new Feed(props, syndFeed);
+    } catch (FeedException e) {
+      throw new FeedTestException("cannot create feed");
+    }
+    return new FeedSelect(feed);
   }
 
   private SyndFeed filledFeed() throws ParseException {

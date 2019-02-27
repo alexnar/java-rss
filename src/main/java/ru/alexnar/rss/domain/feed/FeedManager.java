@@ -1,13 +1,11 @@
 package ru.alexnar.rss.domain.feed;
 
 import com.rometools.rome.io.FeedException;
-import ru.alexnar.rss.model.feed.select.SelectFields;
 import ru.alexnar.rss.model.feed.Feed;
 import ru.alexnar.rss.model.feed.FeedProperties;
 import ru.alexnar.rss.model.feed.FeedSchedule;
-import ru.alexnar.rss.model.feed.Period;
 
-import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -69,6 +67,7 @@ public class FeedManager {
       System.out.println("sourceFeed creation error: " + e.getMessage());
       return null;
     }
+    feed.lastFetched = new Date();
     return feed;
   }
 }
