@@ -25,6 +25,7 @@ public class FeedProcessor implements Runnable {
   public void run() {
     fetch();
     List<FeedEntry> entries = select(feed);
+    feed.lastFetched = new Date();
     write(entries);
   }
 
@@ -40,7 +41,6 @@ public class FeedProcessor implements Runnable {
       System.out.println("Fetching feed error");
     }
     feed.currentFeedData = syndFeed;
-    feed.lastFetched = new Date();
   }
 
   private List<FeedEntry> select(Feed feed) {
