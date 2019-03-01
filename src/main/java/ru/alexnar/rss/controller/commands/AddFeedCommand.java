@@ -1,4 +1,4 @@
-package ru.alexnar.rss.domain.commands;
+package ru.alexnar.rss.controller.commands;
 
 import ru.alexnar.rss.domain.feed.FeedManager;
 import ru.alexnar.rss.model.feed.FeedProperties;

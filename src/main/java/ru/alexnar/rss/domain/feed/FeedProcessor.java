@@ -11,6 +11,7 @@ import ru.alexnar.rss.model.feed.FeedEntry;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 public class FeedProcessor implements Runnable {
@@ -39,6 +40,7 @@ public class FeedProcessor implements Runnable {
       System.out.println("Fetching feed error");
     }
     feed.currentFeedData = syndFeed;
+    feed.lastFetched = new Date();
   }
 
   private List<FeedEntry> select(Feed feed) {

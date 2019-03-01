@@ -43,22 +43,12 @@ public class FeedWriter {
 
   private void appendFeedContent(File file, String feedContent, Feed feed) {
     Path path = file.toPath();
-    String content = prettyFeedContent(feedContent, feed);
     try {
-      Files.write(path, content.getBytes(), StandardOpenOption.APPEND);
+      Files.write(path, feedContent.getBytes(), StandardOpenOption.APPEND);
     } catch (IOException e) {
       System.out.println("write to file error");
     }
   }
-
-  private String prettyFeedContent(String feedContent, Feed feed) {
-    String separator = "\n--------------------------------------------------\n";
-    return separator +
-            "Feed from url:" + feed.url + "\n" +
-            "Time fetched:" + LocalDateTime.now().toString() + "\n" +
-            feedContent;
-  }
-
   private File outputFile(String outputFileName) {
     File file = new File(outputFileName);
     if (file.exists()) return file;

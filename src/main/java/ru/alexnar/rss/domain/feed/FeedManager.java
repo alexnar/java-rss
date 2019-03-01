@@ -63,7 +63,6 @@ public class FeedManager {
       System.out.println("sourceFeed creation error: " + e.getMessage());
       return null;
     }
-    feed.lastFetched = new Date();
     return feed;
   }
 }

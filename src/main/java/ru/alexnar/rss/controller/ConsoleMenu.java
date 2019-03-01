@@ -1,6 +1,6 @@
 package ru.alexnar.rss.controller;
 
-import ru.alexnar.rss.domain.commands.Command;
+import ru.alexnar.rss.controller.commands.Command;
 import ru.alexnar.rss.model.console.CommandLine;
 import ru.alexnar.rss.model.console.CommandLineParseException;
 
