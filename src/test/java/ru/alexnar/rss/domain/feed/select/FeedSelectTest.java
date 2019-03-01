@@ -11,6 +11,9 @@ import ru.alexnar.rss.model.feed.Period;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -19,10 +22,20 @@ import static ru.alexnar.rss.model.feed.select.FeedElementFields.*;
 
 public class FeedSelectTest {
   @Test
+  public void selectFilterItemsBeforeDate() throws ParseException {
+    SyndFeed feed = filledFeed();
+    List<String> fields = Arrays.asList(TITLE.field(), PUB_DATE.field());
+    FeedSelect feedSelect = feedSelect(feed, fields, 2, dateMinutesAgo(4));
+    List<FeedEntry> entries = feedSelect.select();
+
+    assertEquals(1, entries.size());
+  }
+
+  @Test
   public void selectElementFieldWorksCorrectly() throws ParseException {
     SyndFeed feed = filledFeed();
     List<String> fields = Arrays.asList(TITLE.field(), PUB_DATE.field());
-    FeedSelect feedSelect = feedSelect(feed, fields, 2);
+    FeedSelect feedSelect = feedSelect(feed, fields, 2, dateMinutesAgo(10));
     List<FeedEntry> entries = feedSelect.select();
 
     FeedEntry entry1 = entries.get(0);
@@ -42,7 +55,7 @@ public class FeedSelectTest {
   public void selectElementCountMoreThanExistsReturnAll() throws ParseException {
     SyndFeed feed = filledFeed();
     List<String> fields = Arrays.asList(TITLE.field(), PUB_DATE.field());
-    FeedSelect feedSelect = feedSelect(feed, fields, 3);
+    FeedSelect feedSelect = feedSelect(feed, fields, 3, dateMinutesAgo(10));
     List<FeedEntry> entries = feedSelect.select();
 
     assertEquals(2, entries.size());
@@ -52,18 +65,20 @@ public class FeedSelectTest {
   public void selectNegativeElementCountReturnEmpties() throws ParseException {
     SyndFeed feed = filledFeed();
     List<String> fields = Arrays.asList(TITLE.field(), PUB_DATE.field());
-    FeedSelect feedSelect = feedSelect(feed, fields, -1);
+    FeedSelect feedSelect = feedSelect(feed, fields, -1, dateMinutesAgo(10));
     List<FeedEntry> entries = feedSelect.select();
 
     assertEquals(0, entries.size());
   }
 
-  private FeedSelect feedSelect(SyndFeed syndFeed, List<String> fields, int elementCount) {
+  private FeedSelect feedSelect(SyndFeed syndFeed, List<String> fields, int elementCount,
+                                Date lastFetched) {
     String url = "https://some_not_existing_url.test";
     FeedProperties props = new FeedProperties(url, elementCount, defaultPeriod(), fields);
     Feed feed;
     try {
       feed = new Feed(props, syndFeed);
+      feed.lastFetched = lastFetched;
     } catch (FeedException e) {
       throw new FeedTestException("cannot create feed");
     }
@@ -85,8 +100,8 @@ public class FeedSelectTest {
     entry.setTitle("ROME v1.0");
     entry.setLink("http://wiki.java.net/bin/view/Javawsxml/Rome01");
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date date = simpleDateFormat.parse("2004-07-27");
-    entry.setPublishedDate(date);
+    Date date = dateMinutesAgo(3);
+    entry.setPublishedDate(dateMinutesAgo(3));
     description = new SyndContentImpl();
     description.setType("text/plain");
     description.setValue("Initial release of ROME");
@@ -95,7 +110,7 @@ public class FeedSelectTest {
     entry = new SyndEntryImpl();
     entry.setTitle("ROME v3.0");
     entry.setLink("http://wiki.java.net/bin/view/Javawsxml/Rome03");
-    entry.setPublishedDate(date);
+    entry.setPublishedDate(dateMinutesAgo(5));
     description = new SyndContentImpl();
     description.setType("text/html");
     description.setValue("<p>More Bug fixes, mor API changes, some new features and some Unit testing</p>"+
@@ -104,6 +119,11 @@ public class FeedSelectTest {
     entries.add(entry);
     feed.setEntries(entries);
     return feed;
+  }
+
+  private Date dateMinutesAgo(int minutes) {
+    Instant instant = Instant.now().minus(minutes, ChronoUnit.MINUTES);
+    return Date.from(instant);
   }
 
   private Period defaultPeriod() {

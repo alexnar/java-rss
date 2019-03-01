@@ -69,8 +69,4 @@ public class FeedWriter {
     }
     return file;
   }
-
-  private File createFile(String outputFileName) {
-    return null;
-  }
 }
