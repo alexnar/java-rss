@@ -38,11 +38,31 @@ feedProperties:
     unit: !timeUnit 'SECONDS'
  - url: "http://rss.cnn.com/rss/cnn_latest.rss"
    elementCount: 2
-   outputFileName: "cnn"
+   outputFileName: "all"
    elementFields:
     - "title"
     - "description"
     - "pubDate"
    period:
     duration: 10
+    unit: !timeUnit 'MINUTES'
+ - url: "http://tass.ru/rss/v2.xml"
+   elementCount: 3
+   outputFileName: "all"
+   elementFields:
+    - "title"
+    - "description"
+    - "pubDate"
+   period:
+    duration: 3
+    unit: !timeUnit 'MINUTES'
+ - url: "https://www.interfax.ru/rss.asp"
+   elementCount: 3
+   outputFileName: "all"
+   elementFields:
+    - "title"
+    - "description"
+    - "pubDate"
+   period:
+    duration: 3
     unit: !timeUnit 'MINUTES'
