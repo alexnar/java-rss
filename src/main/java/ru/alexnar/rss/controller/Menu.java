@@ -34,6 +34,8 @@ public abstract class Menu {
   private List<Command> defaultCommandList() {
     return Arrays.asList(
             new AddFeedCommand(),
+            new EditFeedCommand(),
+            new RemoveFeedCommand(),
             new ListFeedsCommand()
     );
   }

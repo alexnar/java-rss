@@ -39,15 +39,21 @@ public class ConsoleUtils {
   }
 
   public static List<String> readElementFields() {
-    String availableFields = FeedElementFields.fieldsStr();
-    String helpMessage = "Format: field1 field2..." + "(Available fields: " + availableFields + ")";
+    List<String> availableFields = FeedElementFields.fields();
+    String availableFieldsStr = FeedElementFields.fieldsStr();
+    String helpMessage = "Format: field1 field2..." + "(Available fields: " + availableFieldsStr + ")";
     System.out.println(helpMessage);
     String parts = scanner.nextLine();
     if (parts == null || parts.isEmpty()) {
       System.out.println(FORMAT_ERROR_MESSAGE);
       return readElementFields();
     }
-    return parseParts(parts, " ");
+    List<String> newFields = parseParts(parts, " ");
+    if (!availableFields.containsAll(newFields)) {
+      System.out.println(FORMAT_ERROR_MESSAGE);
+      return readElementFields();
+    }
+    return newFields;
   }
 
   public static String readOutputFileName() {
@@ -78,5 +84,9 @@ public class ConsoleUtils {
             .filter(part -> !part.isEmpty())
             .map(String::trim)
             .collect(Collectors.toList());
+  }
+
+  public static boolean checkManageFeedArgs(List<String> args) {
+    return args == null || args.isEmpty() || args.get(0) == null || args.get(0).isEmpty();
   }
 }

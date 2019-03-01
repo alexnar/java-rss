@@ -7,11 +7,8 @@ import ru.alexnar.rss.model.feed.Feed;
 import ru.alexnar.rss.model.feed.FeedProperties;
 import ru.alexnar.rss.model.feed.FeedSchedule;
 
-import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +24,7 @@ public class FeedManager {
     this.rssConfig = RssConfigAccessor.getInstance();
   }
 
-  public void add(FeedProperties prop) {
+  public void addFeed(FeedProperties prop) {
     Feed feed = createFeed(prop);
     FeedProcessor feedProcessor = new FeedProcessor(feed);
     if (feed == null) return;
@@ -39,8 +36,9 @@ public class FeedManager {
     rssConfig.feedSchedules.put(prop.url, feedSchedule);
   }
 
-  public void edit(String url, FeedProperties newFeedProperties) {
-
+  public void edit(String url, FeedProperties newProps) {
+    removeFeed(url);
+    addFeed(newProps);
   }
 
   public Map<String, FeedSchedule> getFeedSchedules() {
@@ -51,8 +49,21 @@ public class FeedManager {
     return instance;
   }
 
-  private void remove(String url) {
+  public void removeFeed(String url) {
+    removeSchedule(url);
+    removeFromProperties(url);
+  }
 
+  private void removeSchedule(String url) {
+    Map<String, FeedSchedule> feedSchedules = rssConfig.feedSchedules;
+    FeedSchedule feedSchedule = feedSchedules.get(url);
+    feedSchedule.scheduledFuture.cancel(false);
+    feedSchedules.remove(url);
+  }
+
+  private void removeFromProperties(String url) {
+    List<FeedProperties> props = rssConfig.feedProperties;
+    props.removeIf(prop -> prop.url.equals(url));
   }
 
   private Feed createFeed(FeedProperties properties) {

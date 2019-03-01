@@ -13,4 +13,9 @@ public class Period {
     this.duration = duration;
     this.unit = unit;
   }
+
+  @Override
+  public String toString() {
+    return duration + " " + unit.toString();
+  }
 }
