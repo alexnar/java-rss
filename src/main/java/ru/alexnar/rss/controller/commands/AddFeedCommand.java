@@ -20,11 +20,10 @@ public class AddFeedCommand implements Command {
     }
     String url = args.get(0);
     Period period = readPeriod();
-    int elementCount = readElementCount();
-    String outputFileName = readOutputFileName();
-    List<String> elementFields = readElementFields();
-    FeedProperties feedProperties = 
-            new FeedProperties(url, elementCount, period, elementFields, outputFileName);
+    int count = readElementCount();
+    String fileName = readOutputFileName();
+    List<String> fields = readElementFields();
+    FeedProperties feedProperties = new FeedProperties(url, count, period, fields, fileName);
     FeedManager feedManager = FeedManager.getInstance();
     feedManager.add(feedProperties);
     System.out.println("Feed added.");
