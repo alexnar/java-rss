@@ -27,14 +27,13 @@ public class FeedSelect {
     List<SyndEntry> actualEntries = entries.stream()
             .filter(entry -> entry.getPublishedDate().after(feed.lastFetched))
             .collect(Collectors.toList());
-    int actualElementCount = selectElementsCount(feedData, props);
+    int actualElementCount = selectElementsCount(actualEntries, props);
     actualEntries = actualEntries.subList(0, actualElementCount);
     return selectFields(actualEntries);
   }
 
-  private int selectElementsCount(SyndFeed sourceFeed, FeedProperties props) {
-    List<SyndEntry> entries = sourceFeed.getEntries();
-    int selectElementCount = Math.min(props.elementCount, entries.size());
+  private int selectElementsCount(List<SyndEntry> actualEntries, FeedProperties props) {
+    int selectElementCount = Math.min(props.elementCount, actualEntries.size());
     return selectElementCount > 0 ? selectElementCount : 0;
   }
 

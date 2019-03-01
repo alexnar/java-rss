@@ -1,0 +1,11 @@
+threadPoolSize: 4
+feedProperties:
+ - url: "http://static.feed.rbc.ru/rbc/logical/footer/news.rss"
+   elementCount: 10
+   outputFileName: "rbc_feed"
+   elementFields:
+    - "title"
+    - "pubDate"
+   period:
+    duration: 10
+    unit: !timeUnit 'SECONDS'

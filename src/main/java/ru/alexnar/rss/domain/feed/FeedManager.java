@@ -1,6 +1,8 @@
 package ru.alexnar.rss.domain.feed;
 
 import com.rometools.rome.io.FeedException;
+import ru.alexnar.rss.domain.config.RssConfigAccessor;
+import ru.alexnar.rss.model.config.RssConfig;
 import ru.alexnar.rss.model.feed.Feed;
 import ru.alexnar.rss.model.feed.FeedProperties;
 import ru.alexnar.rss.model.feed.FeedSchedule;
@@ -19,16 +21,10 @@ public class FeedManager {
 
   private static FeedManager instance = new FeedManager();
 
-  private Map<String, FeedSchedule> feedSchedules;
-  private ScheduledExecutorService scheduledExecutorService;
+  private RssConfig rssConfig;
 
-  private FeedManager() {
-    this(THREAD_POOL_SIZE);
-  }
-
-  private FeedManager(int threadPoolSize) {
-    feedSchedules = new HashMap<>();
-    scheduledExecutorService = Executors.newScheduledThreadPool(threadPoolSize);
+  public FeedManager() {
+    this.rssConfig = RssConfigAccessor.getInstance();
   }
 
   public void add(FeedProperties prop) {
@@ -37,10 +33,10 @@ public class FeedManager {
     if (feed == null) return;
     long duration = prop.period.duration;
     TimeUnit unit = prop.period.unit;
-    ScheduledFuture<?> scheduledFuture = scheduledExecutorService
+    ScheduledFuture<?> scheduledFuture = rssConfig.scheduledExecutorService
             .scheduleAtFixedRate(feedProcessor, SCHEDULE_INITIAL_DELAY, duration, unit);
     FeedSchedule feedSchedule = new FeedSchedule(feed, scheduledFuture);
-    feedSchedules.put(prop.url, feedSchedule);
+    rssConfig.feedSchedules.put(prop.url, feedSchedule);
   }
 
   public void edit(String url, FeedProperties newFeedProperties) {
@@ -48,7 +44,7 @@ public class FeedManager {
   }
 
   public Map<String, FeedSchedule> getFeedSchedules() {
-    return feedSchedules;
+    return rssConfig.feedSchedules;
   }
 
   public static FeedManager getInstance() {

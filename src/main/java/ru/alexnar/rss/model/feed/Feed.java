@@ -21,6 +21,7 @@ public class Feed {
     this.properties = properties;
     this.currentFeedData = currentFeedData;
     this.url = url(properties.url);
+    this.lastFetched = new Date();
   }
 
   private URL url(String urlStr) throws FeedException {

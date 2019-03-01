@@ -9,12 +9,15 @@ public class FeedProperties {
   private static final int DEFAULT_ELEMENTS_COUNT = Integer.MAX_VALUE;
   private static final Period DEFAULT_PERIOD = new Period(20, TimeUnit.SECONDS);
 
-  public final String url;
+  public String url;
   public int elementCount;
   public Period period;
   public String outputFileName;
-  public final List<String> elementFields;
+  public List<String> elementFields;
 
+  public FeedProperties() {
+
+  }
 
   public FeedProperties(String url) {
     this(url, DEFAULT_ELEMENTS_COUNT, DEFAULT_PERIOD, allFields());

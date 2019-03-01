@@ -3,8 +3,11 @@ package ru.alexnar.rss.model.feed;
 import java.util.concurrent.TimeUnit;
 
 public class Period {
-  public final long duration;
-  public final TimeUnit unit;
+  public long duration;
+  public TimeUnit unit;
+
+  public Period() {
+  }
 
   public Period(long duration, TimeUnit unit) {
     this.duration = duration;

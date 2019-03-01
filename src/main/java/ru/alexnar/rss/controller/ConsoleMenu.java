@@ -3,10 +3,10 @@ package ru.alexnar.rss.controller;
 import ru.alexnar.rss.domain.commands.Command;
 import ru.alexnar.rss.model.console.CommandLine;
 import ru.alexnar.rss.model.console.CommandLineParseException;
-import ru.alexnar.rss.controller.console.CommandLineReader;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ConsoleMenu extends Menu {
   public ConsoleMenu() {
@@ -20,9 +20,9 @@ public class ConsoleMenu extends Menu {
   @Override
   public void start() {
     printHelp();
-    while (true) {
-      CommandLineReader commandLineReader = new CommandLineReader();
-      String commandLineStr = commandLineReader.readLine();
+    Scanner scanner = new Scanner(System.in);
+    while (scanner.hasNextLine()) {
+      String commandLineStr = scanner.nextLine();
       handleCommandLineEvent(commandLineStr);
     }
   }
