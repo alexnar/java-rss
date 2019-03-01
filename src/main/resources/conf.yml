@@ -2,10 +2,47 @@ threadPoolSize: 4
 feedProperties:
  - url: "http://static.feed.rbc.ru/rbc/logical/footer/news.rss"
    elementCount: 10
-   outputFileName: "rbc_feed"
+   outputFileName: "all"
    elementFields:
     - "title"
     - "pubDate"
    period:
-    duration: 10
+    duration: 1
+    unit: !timeUnit 'MINUTES'
+ - url: "https://news.yandex.ru/Saint_Petersburg/index.rss"
+   elementCount: 4
+   outputFileName: "all"
+   elementFields:
+    - "title"
+    - "description"
+   period:
+    duration: 40
     unit: !timeUnit 'SECONDS'
+ - url: "https://news.yandex.ru/Moscow/index.rss"
+   elementCount: 2
+   outputFileName: "all"
+   elementFields:
+    - "title"
+    - "description"
+   period:
+    duration: 40
+    unit: !timeUnit 'SECONDS'
+ - url: "https://news.yandex.ru/Saint_Petersburg/index.rss"
+   elementCount: 4
+   outputFileName: "all"
+   elementFields:
+    - "title"
+    - "description"
+   period:
+    duration: 40
+    unit: !timeUnit 'SECONDS'
+ - url: "http://rss.cnn.com/rss/cnn_latest.rss"
+   elementCount: 2
+   outputFileName: "cnn"
+   elementFields:
+    - "title"
+    - "description"
+    - "pubDate"
+   period:
+    duration: 10
+    unit: !timeUnit 'MINUTES'
