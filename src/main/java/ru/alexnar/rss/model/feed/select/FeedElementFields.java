@@ -25,4 +25,8 @@ public enum FeedElementFields {
             .map(element -> element.field)
             .collect(Collectors.toList());
   }
+
+  public static String fieldsStr() {
+    return fields().stream().collect(Collectors.joining(", "));
+  }
 }

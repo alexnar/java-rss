@@ -1,6 +1,7 @@
 package ru.alexnar.rss.controller;
 
 import ru.alexnar.rss.controller.commands.Command;
+import ru.alexnar.rss.controller.console.ConsoleConfig;
 import ru.alexnar.rss.model.console.CommandLine;
 import ru.alexnar.rss.model.console.CommandLineParseException;
 
@@ -20,7 +21,7 @@ public class ConsoleMenu extends Menu {
   @Override
   public void start() {
     printHelp();
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner = ConsoleConfig.scanner;
     while (scanner.hasNextLine()) {
       String commandLineStr = scanner.nextLine();
       handleCommandLineEvent(commandLineStr);

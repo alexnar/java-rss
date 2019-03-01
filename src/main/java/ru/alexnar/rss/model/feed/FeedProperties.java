@@ -24,11 +24,17 @@ public class FeedProperties {
   }
 
   public FeedProperties(String url, int elementCount, Period period, List<String> elementFields) {
+    this(url, elementCount, period, elementFields, null);
+    outputFileName = fileNameFromUrl(url);
+  }
+
+  public FeedProperties(String url, int elementCount, Period period, List<String> elementFields,
+                        String outputFileName) {
     this.url = url;
     this.elementCount = elementCount;
     this.period = period;
-    this.outputFileName = fileNameFromUrl(url);
     this.elementFields = elementFields;
+    this.outputFileName = outputFileName;
   }
 
   public void setOutputFileName(String outputFileName) {

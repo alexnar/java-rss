@@ -1,8 +1,8 @@
 package ru.alexnar.rss.model.console;
 
-import java.util.Arrays;
+import ru.alexnar.rss.controller.console.ConsoleUtils;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CommandLine {
   public final String alias;
@@ -37,10 +37,6 @@ public class CommandLine {
 
   private List<String> commandLineParts(String commandLine) throws CommandLineParseException {
     if (commandLine == null || commandLine.isEmpty()) throw new CommandLineParseException("incorrect command");
-    String[] parts = commandLine.split(" ");
-    return Arrays.stream(parts)
-            .filter(part -> !part.isEmpty())
-            .map(String::trim)
-            .collect(Collectors.toList());
+    return ConsoleUtils.parseParts(commandLine, " ");
   }
 }
