@@ -15,10 +15,6 @@ public abstract class Menu {
     this.commands = defaultCommandMap();
   }
 
-  public Menu(Map<String, Command> commands) {
-    this.commands = commands;
-  }
-
   public abstract void start();
 
   public void executeCommand(CommandLine commandLine) {

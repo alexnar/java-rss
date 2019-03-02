@@ -1,7 +1,5 @@
 package ru.alexnar.rss.model.feed;
 
-import ru.alexnar.rss.model.feed.Feed;
-
 import java.util.concurrent.ScheduledFuture;
 
 public class FeedSchedule {

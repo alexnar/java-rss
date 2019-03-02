@@ -1,6 +1,5 @@
 package ru.alexnar.rss.domain.feed;
 
-import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
@@ -14,6 +13,9 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Provide feed processing.
+ */
 public class FeedProcessor implements Runnable {
   private Feed feed;
 

@@ -5,9 +5,11 @@ import ru.alexnar.rss.model.config.RssConfig;
 
 import java.io.InputStream;
 
+/**
+ * Provide RssConfig singleton
+ */
 public class RssConfigAccessor {
   private static RssConfig config = initialize();
-
 
   public static RssConfig getInstance() {
     return config;

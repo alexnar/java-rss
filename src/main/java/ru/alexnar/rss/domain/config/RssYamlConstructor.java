@@ -11,12 +11,18 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+/**
+ * Custom Yaml constructor
+ */
 public class RssYamlConstructor extends Constructor {
   public RssYamlConstructor(Class<?> theRoot) {
     super(theRoot);
     this.yamlConstructors.put(new Tag("!timeUnit"), new ConstructPeriod());
   }
 
+  /**
+   * Constructor to serialize @{@link TimeUnit}
+   */
   private class ConstructPeriod extends AbstractConstruct {
     @Override
     public Object construct(Node node) {

@@ -1,8 +1,5 @@
 package ru.alexnar.rss.domain.feed;
 
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedOutput;
 import ru.alexnar.rss.model.feed.Feed;
 import ru.alexnar.rss.model.feed.FeedEntry;
 
@@ -11,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -17,6 +17,9 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+/**
+ * General application config
+ */
 public class RssConfig {
   private static final int SCHEDULE_INITIAL_DELAY = 0;
 

@@ -12,8 +12,10 @@ import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Base class for managing feeds
+ */
 public class FeedManager {
-  private static final int THREAD_POOL_SIZE = 4;
   private static final int SCHEDULE_INITIAL_DELAY = 0;
 
   private static FeedManager instance = new FeedManager();

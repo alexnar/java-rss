@@ -4,6 +4,9 @@ import ru.alexnar.rss.controller.console.ConsoleUtils;
 
 import java.util.List;
 
+/**
+ * Represent command line record
+ */
 public class CommandLine {
   public final String alias;
   public final List<String> args;
