@@ -6,6 +6,10 @@ import java.util.concurrent.TimeUnit;
  * Feed fetch period
  */
 public class Period {
+
+  public Period() {
+  }
+
   public long duration;
   public TimeUnit unit;
 
