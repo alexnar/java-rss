@@ -12,14 +12,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FeedWriter {
-  private static final String OUTPUT_DIR_PATH = "feed_output/";
+  private final String outputDirPath;
+
+  public FeedWriter(String outputDirPath) {
+    this.outputDirPath = outputDirPath;
+  }
 
   public void write(Feed feed, List<FeedEntry> feedEntries) {
+    if (feedEntries == null || feedEntries.isEmpty()) return;
     if (!outputDirExists()) createOutputDir();
-    String outputFileName = OUTPUT_DIR_PATH + feed.properties.outputFileName;
+    String outputFileName = outputDirPath + feed.properties.outputFileName;
     File file = outputFile(outputFileName);
     String feedContent = feedEntriesToString(feedEntries);
-    appendFeedContent(file, feedContent, feed);
+    appendFeedContent(file, feedContent);
   }
 
   private String feedEntriesToString(List<FeedEntry> feedEntries) {
@@ -29,15 +34,15 @@ public class FeedWriter {
   }
 
   private boolean outputDirExists() {
-    return new File(OUTPUT_DIR_PATH).exists();
+    return new File(outputDirPath).exists();
   }
 
   private void createOutputDir() {
-    boolean mkdirs = new File(OUTPUT_DIR_PATH).mkdirs();
+    boolean mkdirs = new File(outputDirPath).mkdirs();
     if (!mkdirs) System.out.println("cannot create dir");
   }
 
-  private void appendFeedContent(File file, String feedContent, Feed feed) {
+  private void appendFeedContent(File file, String feedContent) {
     Path path = file.toPath();
     try {
       Files.write(path, feedContent.getBytes(), StandardOpenOption.APPEND);

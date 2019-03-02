@@ -51,7 +51,7 @@ public class FeedProcessor implements Runnable {
   }
 
   private void write(List<FeedEntry> entries) {
-    FeedWriter feedWriter = new FeedWriter();
+    FeedWriter feedWriter = new FeedWriter("feed_output/");
     feedWriter.write(feed, entries);
   }
 }
