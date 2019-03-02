@@ -2,6 +2,13 @@ group 'projects'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin:'application'
+apply plugin: 'idea'
+mainClassName = "ru.alexnar.rss.Application"
+
+run{
+  standardInput = System.in
+}
 
 sourceCompatibility = 1.8
 
