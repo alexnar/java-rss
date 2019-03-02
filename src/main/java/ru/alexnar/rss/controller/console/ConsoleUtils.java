@@ -19,7 +19,7 @@ public class ConsoleUtils {
 
   public static Period readPeriod() {
     String helpMessage =
-            "Format: <value> <unit> (unit in {SECONDS,MINUTES,HOURS}";
+            "Write period. Format: <value> <unit> (unit in {SECONDS,MINUTES,HOURS}";
     System.out.println(helpMessage);
     String periodStr = scanner.nextLine();
     String[] parts = periodStr.split(" ");
@@ -41,7 +41,8 @@ public class ConsoleUtils {
   public static List<String> readElementFields() {
     List<String> availableFields = FeedElementFields.fields();
     String availableFieldsStr = FeedElementFields.fieldsStr();
-    String helpMessage = "Format: field1 field2..." + "(Available fields: " + availableFieldsStr + ")";
+    String helpMessage = "Write fields. Format: field1 field2..." + "(Available fields: "
+            + availableFieldsStr + ")";
     System.out.println(helpMessage);
     String parts = scanner.nextLine();
     if (parts == null || parts.isEmpty()) {
@@ -67,7 +68,7 @@ public class ConsoleUtils {
   }
 
   public static int readElementCount() {
-    System.out.println("Write integer number:");
+    System.out.println("Write element count (integer number):");
     int elementCount;
     try {
       elementCount = Integer.valueOf(scanner.nextLine());
